@@ -1,0 +1,94 @@
+:root {
+  --text: #55606e;
+  --text-h: #0b1220;
+  --bg: #f6f7f9;
+  --panel: #fff;
+  --border: #dfe3e8;
+  --code-bg: #f1f3f6;
+  --accent: #1f5aa8;
+  --accent-fuerte: #17457f;
+  /* Texto sobre el color de acento: en claro el acento es oscuro, en oscuro es claro. */
+  --sobre-accent: #fff;
+  --accent-bg: rgba(31, 90, 168, 0.08);
+  --accent-border: rgba(31, 90, 168, 0.4);
+  --bien: #1f7a45;
+  --bien-bg: rgba(31, 122, 69, 0.12);
+  --mal: #b3261e;
+  --mal-bg: rgba(179, 38, 30, 0.12);
+  --ojo: #8a5a00;
+  --ojo-bg: rgba(138, 90, 0, 0.13);
+  --shadow: rgba(15, 23, 42, 0.07) 0 1px 3px, rgba(15, 23, 42, 0.05) 0 6px 16px -6px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 16px/150% var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #a3adbb;
+    --text-h: #f1f4f8;
+    --bg: #101319;
+    --panel: #171b23;
+    --border: #2b313c;
+    --code-bg: #1e232c;
+    --accent: #7fb0f0;
+    --accent-fuerte: #a3c8f7;
+    --sobre-accent: #0b1220;
+    --accent-bg: rgba(127, 176, 240, 0.14);
+    --accent-border: rgba(127, 176, 240, 0.45);
+    --bien: #6edb9d;
+    --bien-bg: rgba(110, 219, 157, 0.14);
+    --mal: #ff9b93;
+    --mal-bg: rgba(255, 155, 147, 0.14);
+    --ojo: #e8bd6a;
+    --ojo-bg: rgba(232, 189, 106, 0.14);
+    --shadow: rgba(0, 0, 0, 0.5) 0 1px 3px, rgba(0, 0, 0, 0.35) 0 6px 16px -6px;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+h1,
+h2 {
+  color: var(--text-h);
+  font-weight: 600;
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+  letter-spacing: -0.6px;
+}
+
+h2 {
+  font-size: 18px;
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.9em;
+}
