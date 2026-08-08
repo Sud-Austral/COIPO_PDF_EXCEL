@@ -13,29 +13,18 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import http from 'node:http'
 import { fileURLToPath } from 'node:url'
 import puppeteer from 'puppeteer-core'
 
 import { ENCABEZADOS, indiceDe } from '../src/lib/previredLayout.js'
 import { leerHoja } from './readXlsx.mjs'
+import { BASE, buscarChrome, servirDist } from './servidor.mjs'
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url))
 const RAIZ = path.resolve(AQUI, '..')
 const DIST = path.join(RAIZ, 'dist')
 const ZIP = path.resolve(RAIZ, '../INSUMO/pdfProvired.zip')
-const BASE = '/COIPO_PDF_EXCEL/'
 const DESCARGAS = path.join(RAIZ, '.verify-browser')
-
-const NAVEGADORES = [
-  `${process.env.ProgramFiles}\\Google\\Chrome\\Application\\chrome.exe`,
-  `${process.env['ProgramFiles(x86)']}\\Google\\Chrome\\Application\\chrome.exe`,
-  `${process.env.LOCALAPPDATA}\\Google\\Chrome\\Application\\chrome.exe`,
-  `${process.env['ProgramFiles(x86)']}\\Microsoft\\Edge\\Application\\msedge.exe`,
-  '/usr/bin/google-chrome',
-  '/usr/bin/chromium',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-]
 
 const salir = (motivo) => {
   console.log(`⚠ ${motivo}`)
@@ -44,7 +33,7 @@ const salir = (motivo) => {
 
 if (!fs.existsSync(DIST)) salir('No existe dist/. Corre primero: npm run build')
 if (!fs.existsSync(ZIP)) salir(`No existe ${ZIP}. INSUMO/ está en .gitignore.`)
-const chrome = NAVEGADORES.find((p) => p && fs.existsSync(p))
+const chrome = buscarChrome()
 if (!chrome) salir('No se encontró Chrome ni Edge instalados.')
 
 let fallos = 0
@@ -53,34 +42,9 @@ const ok = (cond, texto) => {
   console.log(`  ${cond ? '✔' : '✘'} ${texto}`)
 }
 
-// --- servidor estático que imita el subpath de GitHub Pages ---
-const TIPOS = {
-  '.html': 'text/html; charset=utf-8',
-  '.js': 'text/javascript',
-  '.mjs': 'text/javascript',
-  '.css': 'text/css',
-  '.svg': 'image/svg+xml',
-}
-const pedidos = []
-const servidor = http.createServer((req, res) => {
-  const url = decodeURIComponent(req.url.split('?')[0])
-  pedidos.push(url)
-  if (!url.startsWith(BASE)) {
-    res.writeHead(404).end('fuera del base')
-    return
-  }
-  let archivo = path.join(DIST, url.slice(BASE.length))
-  if (url === BASE || url.endsWith('/')) archivo = path.join(DIST, 'index.html')
-  if (!fs.existsSync(archivo) || fs.statSync(archivo).isDirectory()) {
-    res.writeHead(404).end('no existe')
-    return
-  }
-  res.writeHead(200, { 'Content-Type': TIPOS[path.extname(archivo)] ?? 'application/octet-stream' })
-  fs.createReadStream(archivo).pipe(res)
-})
-await new Promise((r) => servidor.listen(0, '127.0.0.1', r))
-const puerto = servidor.address().port
-const sitio = `http://127.0.0.1:${puerto}${BASE}`
+// El servidor estático que imita el subpath de GitHub Pages vive en ./servidor.mjs,
+// compartido con verify-banner.mjs.
+const { sitio, pedidos, cerrar } = await servirDist(DIST)
 console.log(`\nSirviendo dist/ en ${sitio}\n`)
 
 fs.rmSync(DESCARGAS, { recursive: true, force: true })
@@ -179,7 +143,7 @@ try {
   console.log(`  · ${pedidos.length} peticiones servidas, todas bajo ${BASE}`)
 } finally {
   await navegador.close()
-  servidor.close()
+  cerrar()
 }
 
 console.log(`\n${fallos === 0 ? '✔ NAVEGADOR OK' : `✘ ${fallos} comprobación(es) fallaron`}\n`)

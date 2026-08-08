@@ -12,6 +12,8 @@ npm run build            # genera dist/
 npm run lint             # oxlint
 npm run verify           # arnés de datos, en Node, sobre INSUMO/
 npm run verify:browser   # arnés en Chrome real sobre dist/ (correr build antes)
+npm run verify:banner    # arnés del banner: mide píxeles sobre las capturas
+npm run favicon          # regenera el favicon recortando el isotipo del banner
 ```
 
 ## Cómo está armado
@@ -94,3 +96,27 @@ revisa, comprueba que no haya errores ni recursos 404 y deja `captura-light.png`
 
 Ambos salen con código 0 avisando si no existe `INSUMO/` (está en `.gitignore`) o si no hay
 Chrome instalado.
+
+`npm run verify:banner` es un arnés **aparte**, y aparte por un motivo concreto: los otros dos
+exigen `INSUMO/` antes que nada, así que en cualquier máquina sin esa carpeta —incluido el
+runner de CI— salen con 0 sin llegar a tomar una sola captura. El banner no necesita datos
+reales, o sea que éste sí corre siempre, y por eso es el único de los tres que está en
+`deploy.yml`.
+
+Lo que comprueba, sobre `dist/` servido bajo el subpath de Pages:
+
+| Qué | Cómo |
+| --- | --- |
+| El asset llegó al artefacto | `dist/assets/banner-conaf-uia-<hash>.jpg` existe, sus bytes son idénticos al fuente y algún chunk lo referencia |
+| El alto pintado | `max(ancho / 17.1299, 68)` ±1 px a 1920, 1366, 1165, 768 y 390, en tema claro y oscuro |
+| El filete de identidad | barrido de la fila `y=2` buscando los RGB del azul y del rojo, y dónde empieza |
+| Los bordes | sin línea clara de 1 px arriba ni abajo |
+| Sin la imagen | se bloquea la petición: tiene que verse `#064928`, no blanco, y la caja conservar su alto |
+| Con scroll | el banner no quedó fijo |
+| El favicon | `favicon.png` y `apple-touch-icon.png` en `dist/`, referenciados con la base resuelta |
+
+**Mide sobre el PNG capturado, no consultando el DOM**: comprueba lo que se pintó, no lo que el
+CSS declaró. Para decodificar los PNG sin agregar dependencias, los carga como `data:` URI en una
+pestaña en blanco y los vuelca a un `<canvas>`. Además deja `captura-banner-390-marca-x4.png`,
+la zona de la marca ampliada ×4 por vecino más cercano: eso **hay que mirarlo**, porque la
+legibilidad del logotipo a 390 px no se deduce de ningún número.

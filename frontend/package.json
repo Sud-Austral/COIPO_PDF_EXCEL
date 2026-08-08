@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "lint": "oxlint",
     "verify": "node scripts/verify.mjs",
-    "verify:browser": "node scripts/verify-browser.mjs"
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "verify:banner": "node scripts/verify-banner.mjs",
+    "favicon": "node scripts/gen-favicon.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",

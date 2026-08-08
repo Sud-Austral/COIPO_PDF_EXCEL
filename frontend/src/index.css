@@ -19,6 +19,13 @@
   --ojo-bg: rgba(138, 90, 0, 0.13);
   --shadow: rgba(15, 23, 42, 0.07) 0 1px 3px, rgba(15, 23, 42, 0.05) 0 6px 16px -6px;
 
+  /* Marca institucional, medida píxel a píxel sobre src/assets/banner-conaf-uia.jpg
+     (3032 × 177). NO se redefinen en el bloque de tema oscuro: el JPEG es el mismo
+     en los dos temas, así que el color de respaldo también. */
+  --verde-institucional: #064928; /* campo principal del banner */
+  --razon-banner: 17.1299; /* 3032 / 177 */
+  --alto-minimo-banner: 68px; /* piso de altura; el cruce cae en 1164,83 px */
+
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 

@@ -44,6 +44,14 @@ jobs:
           # El base path tiene que calzar con el nombre del repositorio.
           VITE_BASE: /${{ github.event.repository.name }}/
 
+      # El banner no necesita INSUMO/, así que esto SÍ verifica de verdad en CI, al
+      # revés que verify:browser. EXIGIR_CHROME convierte "no hay Chrome" en un fallo
+      # ruidoso en vez de un exit 0 que no comprueba nada.
+      - name: Verificar el banner
+        run: npm run verify:banner
+        env:
+          EXIGIR_CHROME: '1'
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3

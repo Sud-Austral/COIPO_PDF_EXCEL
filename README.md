@@ -68,12 +68,23 @@ npm run dev              # http://localhost:5173
 npm run build            # genera dist/
 npm run verify           # arnés sobre INSUMO/ (lógica, en Node)
 npm run verify:browser   # arnés en Chrome real sobre dist/ (requiere npm run build)
+npm run verify:banner    # arnés del banner: mide píxeles sobre capturas de Chrome
 ```
 
 `INSUMO/` está en `.gitignore`: contiene datos reales de personas y nunca debe subirse. Los dos
-arneses avisan y salen con código 0 si la carpeta no existe.
+primeros arneses avisan y salen con código 0 si la carpeta no existe. `verify:banner` no depende
+de esos datos, así que corre siempre —también en CI— y es el único que verifica la cabecera.
 
 Ver [`frontend/README.md`](frontend/README.md) para el detalle de la arquitectura.
+
+## Identidad
+
+La cabecera es el banner institucional CONAF · UIA, y el favicon es el isotipo recortado de ese
+mismo archivo. Todo el material gráfico —el asset original, lo que se derivó de él, las medidas
+verificadas píxel a píxel y las capturas de referencia— vive en
+[`INSUMO_GRAFICO/`](INSUMO_GRAFICO/README.md). El verde institucional **no** reemplazó al azul de
+la interfaz: convive con él, y el porqué está escrito en un comentario de
+[`frontend/src/App.css`](frontend/src/App.css).
 
 ## Despliegue
 

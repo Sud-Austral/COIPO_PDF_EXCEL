@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import './App.css'
+import Banner from './components/Banner.jsx'
 import DropZone from './components/DropZone.jsx'
 import Progreso from './components/Progreso.jsx'
 import TablaDocumentos from './components/TablaDocumentos.jsx'
@@ -81,68 +82,72 @@ export default function App() {
   )
 
   return (
-    <div className="app">
-      <header>
-        <h1>Consolidador Previred</h1>
-        <p className="bajada">
-          Convierte el ZIP con los comprobantes de pago de cotizaciones en una sola planilla Excel
-          con el layout de 108 columnas, una fila por trabajador.
-        </p>
-        <p className="privacidad">
-          Todo el procesamiento ocurre en tu navegador. Ningún archivo se sube a ningún servidor ni queda guardado.
-        </p>
-      </header>
+    <>
+      <Banner />
 
-      {estado.fase === 'inicio' && <DropZone onArchivo={procesar} />}
+      <div className="app">
+        <div className="intro">
+          <h1>Consolidador Previred</h1>
+          <p className="bajada">
+            Convierte el ZIP con los comprobantes de pago de cotizaciones en una sola planilla Excel
+            con el layout de 108 columnas, una fila por trabajador.
+          </p>
+          <p className="privacidad">
+            Todo el procesamiento ocurre en tu navegador. Ningún archivo se sube a ningún servidor ni queda guardado.
+          </p>
+        </div>
 
-      {estado.fase === 'procesando' && <Progreso progreso={estado.progreso} nombreZip={estado.nombreZip} />}
+        {estado.fase === 'inicio' && <DropZone onArchivo={procesar} />}
 
-      {estado.fase === 'error' && (
-        <section className="tarjeta error">
-          <h2>No se pudo procesar el archivo</h2>
-          <p>{estado.error}</p>
-          <button type="button" className="boton" onClick={reiniciar}>
-            Intentar con otro ZIP
-          </button>
-        </section>
-      )}
+        {estado.fase === 'procesando' && <Progreso progreso={estado.progreso} nombreZip={estado.nombreZip} />}
 
-      {estado.fase === 'listo' && estado.resultado && (
-        <>
-          <section className="tarjeta resultado">
-            <div className="cifra">
-              <strong>{estado.resultado.trabajadores.toLocaleString('es-CL')}</strong>
-              <span>trabajadores consolidados</span>
-            </div>
-            <div className="acciones">
-              <a className="boton primario" href={estado.resultado.url} download={estado.resultado.archivo}>
-                Descargar Excel
-              </a>
-              <button type="button" className="boton" onClick={reiniciar}>
-                Procesar otro ZIP
-              </button>
-            </div>
-            <p className="nota">
-              {estado.resultado.archivo} · {(estado.resultado.tamano / 1024 / 1024).toFixed(1)} MB ·
-              {problemas === 0
-                ? ' todos los totales del comprobante cuadran'
-                : ` ${problemas} total(es) no cuadran, revisa la hoja Resumen`}
-            </p>
+        {estado.fase === 'error' && (
+          <section className="tarjeta error">
+            <h2>No se pudo procesar el archivo</h2>
+            <p>{estado.error}</p>
+            <button type="button" className="boton" onClick={reiniciar}>
+              Intentar con otro ZIP
+            </button>
           </section>
+        )}
 
-          <TablaDocumentos documentos={estado.resultado.documentos} />
-          <Control control={estado.resultado.control} />
-          <Avisos avisos={estado.resultado.avisos} />
-        </>
-      )}
+        {estado.fase === 'listo' && estado.resultado && (
+          <>
+            <section className="tarjeta resultado">
+              <div className="cifra">
+                <strong>{estado.resultado.trabajadores.toLocaleString('es-CL')}</strong>
+                <span>trabajadores consolidados</span>
+              </div>
+              <div className="acciones">
+                <a className="boton primario" href={estado.resultado.url} download={estado.resultado.archivo}>
+                  Descargar Excel
+                </a>
+                <button type="button" className="boton" onClick={reiniciar}>
+                  Procesar otro ZIP
+                </button>
+              </div>
+              <p className="nota">
+                {estado.resultado.archivo} · {(estado.resultado.tamano / 1024 / 1024).toFixed(1)} MB ·
+                {problemas === 0
+                  ? ' todos los totales del comprobante cuadran'
+                  : ` ${problemas} total(es) no cuadran, revisa la hoja Resumen`}
+              </p>
+            </section>
 
-      <footer>
-        <p>
-          El Excel trae tres hojas: <strong>TXT CONSOLIDADO</strong> con las 108 columnas,{' '}
-          <strong>Resumen</strong> con los totales de control de cada comprobante y{' '}
-          <strong>Revisar</strong> con todo lo que quedó dudoso.
-        </p>
-      </footer>
-    </div>
+            <TablaDocumentos documentos={estado.resultado.documentos} />
+            <Control control={estado.resultado.control} />
+            <Avisos avisos={estado.resultado.avisos} />
+          </>
+        )}
+
+        <footer>
+          <p>
+            El Excel trae tres hojas: <strong>TXT CONSOLIDADO</strong> con las 108 columnas,{' '}
+            <strong>Resumen</strong> con los totales de control de cada comprobante y{' '}
+            <strong>Revisar</strong> con todo lo que quedó dudoso.
+          </p>
+        </footer>
+      </div>
+    </>
   )
 }
