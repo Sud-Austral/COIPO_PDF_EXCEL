@@ -10,6 +10,8 @@
  * la app y el build `legacy` en Node desde scripts/verify.mjs.
  */
 
+import { extraerRayado } from './pdfRules.js'
+
 /** Tolerancia vertical (pt) para considerar que dos celdas están en la misma fila. */
 const ROW_TOL = 2.5
 
@@ -43,9 +45,17 @@ export async function extraerPaginas(pdfjs, data, onPage) {
         const x1 = x0 + item.width
         celdas.push({ x0, x1, xc: (x0 + x1) / 2, y: m[5], texto: item.str.trim() })
       }
+      // El rayado de la tabla (ver pdfRules.js): es lo que convierte los encabezados
+      // de agrupación de heurística en dato leído del archivo.
+      const bandas = await extraerRayado(pdfjs, page, viewport)
       page.cleanup()
 
-      pages.push({ index: i, rows: agruparEnFilas(celdas), texto: celdas.map((c) => c.texto).join('\n') })
+      pages.push({
+        index: i,
+        rows: agruparEnFilas(celdas),
+        bandas,
+        texto: celdas.map((c) => c.texto).join('\n'),
+      })
       if (onPage) onPage(i, doc.numPages)
     }
   } finally {

@@ -34,9 +34,18 @@ jobs:
 
       - run: npm run lint
 
-      # INSUMO/ está en .gitignore, así que en CI el arnés no encuentra el ZIP y
-      # sale con 0 avisando. Sirve igual como humo: valida que src/lib/ importe bien.
+      # Verificación de verdad en CI: coherencia entre las tablas de configuración,
+      # detección de institución sobre portadas transcritas, y las funciones de texto
+      # y RUT. Nada de esto necesita los PDF reales.
+      - run: npm run test
+
+      # El arnés sobre datos reales no puede correr en CI (INSUMO/ está en .gitignore
+      # porque tiene datos de personas). PERMITIR_SIN_INSUMO lo deja salir con 0, pero
+      # sólo sirve como humo: valida que src/lib/ importe bien. La verificación real
+      # es `npm run test` de arriba y `npm run verify` en la máquina de quien tiene los PDF.
       - run: npm run verify
+        env:
+          PERMITIR_SIN_INSUMO: '1'
 
       - name: Build
         run: npm run build

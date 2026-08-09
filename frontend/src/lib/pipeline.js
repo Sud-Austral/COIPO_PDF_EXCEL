@@ -6,6 +6,9 @@
 import { extraerPdfs, listarNoPdf } from './unzip.js'
 import { parsearDocumento } from './parseDocumento.js'
 import { consolidar } from './consolidate.js'
+import { compararPortada } from './portada.js'
+import { ENCABEZADOS } from './previredLayout.js'
+import { estadoDelDocumento, avisosDeDocumento, VERIFICADO, SIN_VERIFICAR, NO_CUADRA } from './verificacion.js'
 
 /**
  * @param {object} pdfjs módulo pdfjs-dist ya configurado
@@ -37,7 +40,7 @@ export async function procesarZip(pdfjs, zipBytes, onProgress) {
         error: err?.message ?? String(err),
         registros: [],
         paginas: 0,
-        totalesControl: [],
+        paresPortada: [],
       })
     }
   }
@@ -47,6 +50,35 @@ export async function procesarZip(pdfjs, zipBytes, onProgress) {
   const utiles = documentos.filter((d) => !d.duplicadoDe)
   const { filas, trabajadores, avisos } = consolidar(utiles)
   const control = verificarTotales(utiles)
+
+  // Estado por documento y avisos de todo lo que se descartó. Va antes del resto de
+  // los avisos para que lo primero que se lea sea qué no está verificado.
+  for (const doc of utiles) {
+    const { estado, motivos } = estadoDelDocumento(doc, control.filter((c) => c.archivo === doc.archivo))
+    doc.estado = estado
+    doc.motivos = motivos
+    avisos.push(...avisosDeDocumento(doc))
+    if (estado !== VERIFICADO) {
+      avisos.unshift({
+        tipo: estado === NO_CUADRA ? 'Documento que no cuadra' : 'Documento SIN VERIFICAR',
+        archivo: doc.archivo,
+        detalle: motivos.join(' '),
+      })
+    }
+  }
+  const estado = peorEstado(utiles)
+
+  // Una columna que sale igual en TODAS las filas casi siempre significa que nadie la
+  // alimentó. Es el aviso más barato que existe y habría bastado para ver el problema:
+  // con el comprobante de AFP mal clasificado salían 86 de 108 constantes.
+  const constantes = ENCABEZADOS.filter((_, i) => new Set(filas.map((f) => String(f[i] ?? ''))).size <= 1)
+  if (constantes.length) {
+    avisos.push({
+      tipo: 'Columnas constantes en el consolidado',
+      archivo: '',
+      detalle: `${constantes.length} de ${ENCABEZADOS.length} columnas salen iguales en todas las filas: ${constantes.join(', ')}`,
+    })
+  }
 
   for (const doc of duplicados) {
     avisos.unshift({
@@ -71,7 +103,14 @@ export async function procesarZip(pdfjs, zipBytes, onProgress) {
     }
   }
 
-  return { documentos, filas, trabajadores, avisos, control }
+  return { documentos, filas, trabajadores, avisos, control, estado }
+}
+
+/** El estado del ZIP es el peor de sus documentos. */
+function peorEstado(documentos) {
+  if (documentos.some((d) => d.estado === NO_CUADRA)) return NO_CUADRA
+  if (documentos.some((d) => d.estado === SIN_VERIFICAR)) return SIN_VERIFICAR
+  return VERIFICADO
 }
 
 /**
@@ -104,29 +143,22 @@ function marcarDuplicados(documentos) {
 export function verificarTotales(documentos) {
   const resultado = []
   for (const doc of documentos) {
-    for (const total of doc.totalesControl ?? []) {
-      const extraido = (doc.registros ?? []).reduce((s, r) => s + Number(r[total.campo] ?? 0), 0)
-      resultado.push({
-        archivo: doc.archivo,
-        institucion: doc.institucion,
-        rotulo: total.rotulo,
-        campo: total.campo,
-        declarado: total.monto,
-        extraido,
-        ok: extraido === total.monto,
-      })
+    const { comparaciones, sinComparar, informativos } = compararPortada(
+      doc.paresPortada,
+      doc.perfil?.totales,
+      doc.registros,
+    )
+    // Se anota en el documento para poder decir cuánta portada quedó sin cotejar:
+    // la cobertura es tan importante como el resultado de las comparaciones.
+    doc.cobertura = {
+      pares: (doc.paresPortada ?? []).length,
+      comparados: comparaciones.length,
+      informativos: informativos.length,
+      sinComparar: sinComparar.length,
     }
-    if (doc.afiliadosDeclarados != null) {
-      const unicos = new Set((doc.registros ?? []).map((r) => r._rut.cuerpo)).size
-      resultado.push({
-        archivo: doc.archivo,
-        institucion: doc.institucion,
-        rotulo: 'N° de Afiliados Informados',
-        campo: '(rut únicos)',
-        declarado: doc.afiliadosDeclarados,
-        extraido: unicos,
-        ok: unicos === doc.afiliadosDeclarados,
-      })
+    doc.paresSinComparar = sinComparar
+    for (const c of comparaciones) {
+      resultado.push({ archivo: doc.archivo, institucion: doc.institucion, ...c })
     }
   }
   return resultado

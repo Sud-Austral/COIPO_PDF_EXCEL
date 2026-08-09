@@ -25,7 +25,7 @@ try {
 self.onmessage = async (evento) => {
   const { zip } = evento.data
   try {
-    const { documentos, filas, avisos, control } = await procesarZip(pdfjs, new Uint8Array(zip), (p) =>
+    const { documentos, filas, avisos, control, estado } = await procesarZip(pdfjs, new Uint8Array(zip), (p) =>
       self.postMessage({ tipo: 'progreso', ...p }),
     )
 
@@ -41,6 +41,7 @@ self.onmessage = async (evento) => {
         trabajadores: filas.length,
         avisos,
         control,
+        estado,
         // Solo los metadatos: los registros completos se quedan en el worker.
         documentos: documentos.map((d) => ({
           archivo: d.archivo,
@@ -53,6 +54,9 @@ self.onmessage = async (evento) => {
           duplicadoDe: d.duplicadoDe ?? null,
           reconocido: !!d.reconocido,
           error: d.error ?? null,
+          estado: d.estado ?? null,
+          motivos: d.motivos ?? [],
+          cobertura: d.cobertura ?? null,
         })),
       },
       [bytes],

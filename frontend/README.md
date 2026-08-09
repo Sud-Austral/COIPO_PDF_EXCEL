@@ -10,7 +10,8 @@ npm ci
 npm run dev              # servidor de desarrollo
 npm run build            # genera dist/
 npm run lint             # oxlint
-npm run verify           # arnés de datos, en Node, sobre INSUMO/
+npm run test             # tests puros (sin PDF): tablas, detección, geometría
+npm run verify           # arnés de datos, en Node, sobre todos los INSUMO/*.zip
 npm run verify:browser   # arnés en Chrome real sobre dist/ (correr build antes)
 npm run verify:banner    # arnés del banner: mide píxeles sobre las capturas
 npm run favicon          # regenera el favicon recortando el isotipo del banner
@@ -39,7 +40,9 @@ pdf.js y falla, cae en su *fake worker*, que corre dentro de nuestro worker y fi
 | --- | --- |
 | `lib/unzip.js` | Descomprime en memoria; ignora `__MACOSX/`, `._*` y `.DS_Store`. |
 | `lib/pdfPages.js` | pdf.js → celdas `{x0, x1, xc, y, texto}` en coordenadas **visuales**. |
-| `lib/tableExtract.js` | Encuentra la tabla y deduce las columnas del encabezado del PDF. |
+| `lib/pdfRules.js` | El **rayado** de la tabla: los rectángulos que el PDF dibuja para cada celda. |
+| `lib/tableExtract.js` | Encuentra la tabla y deduce las columnas, del rayado o (si no hay) del texto. |
+| `lib/verificacion.js` | Los tres estados de un documento y los avisos de todo lo que se descartó. |
 | `lib/portada.js` | Empleador, folio, período y **totales de control** de la primera página. |
 | `lib/perfiles.js` | Reconoce la institución y traduce sus rótulos a campos canónicos. |
 | `lib/campos.js` | Vocabulario intermedio: cada campo con su regla de agregación y su columna. |
@@ -52,12 +55,21 @@ pdf.js y falla, cae en su *fake worker*, que corre dentro de nuestro worker y fi
 
 - **Las páginas vienen rotadas 90°.** En coordenadas del PDF cada trabajador es una *columna*.
   Hay que aplicar `viewport.transform` (que ya incorpora `page.rotate`) antes de agrupar filas.
-- **Todas las celdas están centradas** respecto de su columna, incluidos el RUT y el nombre. Por
-  eso alcanza con asignar cada celda a la columna cuyo centro esté más cerca; no hay coordenadas
-  fijas en el código.
-- **Los encabezados de grupo van centrados sobre sus columnas** y no siempre se solapan con las
-  de los extremos: "Movimiento de Personal" no cubre horizontalmente a "Cod.". Por eso cada
-  encabezado recibe un *dominio* que llega hasta el punto medio con su vecino.
+- **La tabla viene DIBUJADA, no sólo escrita.** Cada celda es un rectángulo en la lista de
+  operadores de la página (791 en una página de AFP, 880 en una de CCAF). De ahí salen los
+  bordes exactos de cada columna y de cada encabezado de agrupación: una celda de grupo que
+  contiene a la de una columna es su ancestro, sin ambigüedad. Ojo con dos cosas al leerlos:
+  el bbox está en `argsArray[i][2]` de `constructPath`, y `Util.applyTransform` **muta el punto
+  y devuelve `undefined`** en pdf.js v6.
+- **Por qué importa.** Un comprobante de AFP trae DOS columnas "Remuneración Imponible" —la del
+  fondo de pensiones y la del seguro de cesantía— y sólo el encabezado de agrupación las
+  distingue. Deduciendo los grupos del texto no se puede: sus rótulos van centrados y cubren
+  cantidades de columnas distintas, así que el punto medio entre dos rótulos cae dentro del
+  grupo equivocado por tres puntos. Con eso, las dos columnas quedaban con la misma clave y sus
+  montos se sumaban en silencio.
+- **El método por texto sigue ahí** como respaldo para páginas sin rayado (`camino: 'heuristico'`),
+  con sus límites conocidos: reparte los grupos por punto medio y asigna cada celda a la columna
+  *más cercana*, no a la que la contiene.
 - **El pie legal contiene `Ord. N° 3673/0181`**, que calza con un `\d{2}/\d{4}` suelto. El
   período se busca por rótulo, nunca por patrón libre.
 - **El cuadro "Antecedentes Generales" cae en las mismas filas visuales** que el resumen de
@@ -84,10 +96,49 @@ destino del layout.
 
 ## Verificación
 
-`npm run verify` no comprueba que el código compile: comprueba el **resultado**. Lee el ZIP real
-y exige que la suma de lo extraído sea idéntica a **cada total que el propio comprobante
-declara** en su portada, y que los RUT únicos coincidan con el "N° de Afiliados Informados".
-Después genera el `.xlsx`, lo vuelve a abrir y verifica lo que quedó adentro.
+### La regla de fondo: cero comparaciones también es un fallo
+
+Un comprobante entero de AFP se clasificó como AFC durante meses. No generó **ninguna**
+comparación contra su portada, y como la pantalla contaba *totales fallidos* —cero de cero— decía
+«todos los totales del comprobante cuadran» mientras `impo_afp` salía en 0 para los 3.610
+trabajadores. De ahí los **tres estados** de `lib/verificacion.js`:
+
+| Estado | Qué significa |
+| --- | --- |
+| ✔ verificado | se comprobó contra su propia portada y todo calzó |
+| ⚠ sin verificar | **no hay con qué comprobarlo**, o quedó algo sin cotejar |
+| ✘ no cuadra | se comprobó y no calza |
+
+`verificado` exige todas estas: institución detectada con margen suficiente; **al menos una**
+comparación; todas ✔; todo campo con monto respaldado por algún total (o declarado en
+`sinRespaldo` del perfil, con su motivo); y ninguna página sin leer ni sin sección.
+
+### Los arneses
+
+`npm run test` corre sin PDF, así que es lo que verifica en CI: coherencia entre las tablas de
+configuración (todo campo apunta a una columna que existe, todo rótulo a un campo que existe),
+detección de institución sobre portadas transcritas, y extracción de tablas sobre páginas
+sintéticas —incluido el caso de las dos columnas homónimas—.
+
+`npm run verify` comprueba el **resultado** sobre los datos reales. Recorre todos los
+`INSUMO/*.zip` y exige que la suma de lo extraído sea idéntica a **cada total que el propio
+comprobante declara** en su portada, que ningún documento quede sin verificar, y que nada se haya
+movido respecto de `fixtures/`. Después genera el `.xlsx`, lo vuelve a abrir y revisa lo que quedó
+adentro. **Sale con código 1 si algo falla**; con `PERMITIR_SIN_INSUMO=1` tolera la ausencia de
+datos (lo que usa CI), pero entonces no verifica nada y lo dice.
+
+### Los fixtures
+
+`fixtures/<zip>.json` guarda agregados y estructura —sumas por columna, filas de control,
+cobertura, qué clave calzó con qué campo—. **Ningún dato de fila**: ni RUT, ni nombres, ni montos
+individuales. Se regenera a propósito con `npm run verify -- --actualizar`.
+
+`fixtures/congelado.json` es distinto: son las invariantes del comprobante de Caja Los Andes, el
+único perfil que estaba validado contra datos reales antes de esta reescritura. **No lo toca
+ningún flag.** Se escribió antes de cambiar una línea de `src/lib/` y sirvió para reescribir la
+detección, el mapeo y la geometría entera comprobando que las 20 sumas por campo, los 9 totales de
+control y las 4.584 líneas del CCAF no se movieran ni un peso. Si una de esas cambia, o
+encontraste un bug real o rompiste algo: averigua cuál de las dos antes de actualizarla.
 
 `npm run verify:browser` hace lo mismo en Chrome de verdad, sobre `dist/` servido bajo el mismo
 subpath de GitHub Pages: carga la página, sube el ZIP, espera el resultado, descarga el Excel, lo

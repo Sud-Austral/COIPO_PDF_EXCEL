@@ -57,6 +57,18 @@
   max-width: 68ch;
 }
 
+/* Motivos por los que un documento no quedó verificado. */
+.motivos {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .privacidad {
   align-self: flex-start;
   font-size: 14px;

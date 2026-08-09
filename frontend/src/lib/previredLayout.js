@@ -156,11 +156,40 @@ export function filaVacia() {
   return COLUMNAS.map((c) => (c.tipo === 'num' ? 0 : c.def))
 }
 
-/** Códigos de caja de compensación según Previred. */
+/**
+ * Códigos de caja de compensación según Previred (Tabla de Equivalencia N°18).
+ *
+ * ⚠️ `gabriela mistral: 5` NO está en la tabla vigente, que sólo lista
+ * 00 Sin CCAF · 01 Los Andes · 02 La Araucana · 03 Los Héroes · 04 18 de Septiembre.
+ * Se conserva porque no hace daño (nunca calzará) pero conviene confirmarlo contra la
+ * tabla oficial antes de darlo por bueno. Los Andes = 1, que es el caso validado.
+ */
 export const COD_CCAF = {
   'los andes': 1,
   'la araucana': 2,
   'los heroes': 3,
   '18 de septiembre': 4,
   'gabriela mistral': 5,
+}
+
+/**
+ * Códigos de AFP según Previred (Tabla de Equivalencia N°10).
+ *
+ * ⚠️ SIN CONFIRMAR contra la tabla oficial vigente salvo PlanVital = 29, que es el
+ * único que se puede cotejar con la muestra disponible. Antes de confiar en el resto,
+ * verificarlos en las Tablas de Equivalencia de Previred.
+ *
+ * La columna `nom_AFP` del layout es numérica, así que Cuprum se escribe 3 y no "03".
+ * En el archivo plano de Previred es un campo de 2 posiciones con cero a la izquierda;
+ * para decidirlo hace falta un TXT real, que hoy no está en INSUMO/.
+ */
+export const COD_AFP = {
+  cuprum: 3,
+  habitat: 5,
+  provida: 8,
+  planvital: 29,
+  'plan vital': 29,
+  capital: 33,
+  modelo: 34,
+  uno: 35,
 }

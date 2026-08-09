@@ -4,7 +4,7 @@
  */
 
 import { CAMPOS } from './campos.js'
-import { filaVacia, indiceDe, IDX_RUT_AUX, IDX_CAJA_AUX, IDX_LINEA_AUX, COD_CCAF } from './previredLayout.js'
+import { filaVacia, indiceDe, IDX_RUT_AUX, IDX_CAJA_AUX, IDX_LINEA_AUX, COD_CCAF, COD_AFP } from './previredLayout.js'
 import { dateKey, norm } from './text.js'
 import { partirNombre, dvCalculado } from './rut.js'
 
@@ -70,6 +70,7 @@ export function consolidar(documentos) {
       acc._lineas += 1
       if (doc.periodo && !acc._periodo) acc._periodo = doc.periodo
       if (doc.bloque === 'ccaf' && !acc._ccaf) acc._ccaf = doc.institucion
+      if (doc.bloque === 'afp' && !acc._afp) acc._afp = doc.institucion
       if (doc.perfil?.regPrevi && !acc._regPrevi) acc._regPrevi = doc.perfil.regPrevi
       if (doc.perfil?.codInstSalud && !acc._codInstSalud) acc._codInstSalud = doc.perfil.codInstSalud
 
@@ -131,6 +132,12 @@ function construirFila(t, correlativo, avisos) {
   if (t._ccaf) {
     const cod = COD_CCAF[norm(t._ccaf).replace('caja de compensacion ', '')]
     if (cod) set('cod_CCAF', cod)
+  }
+  if (t._afp) {
+    // "AFP PlanVital" -> "planvital" -> 29. La columna nom_AFP quedaba siempre en 0
+    // porque ningún campo canónico la alimentaba y no existía la tabla de códigos.
+    const cod = COD_AFP[norm(t._afp).replace(/^afp\s+/, '')]
+    if (cod) set('nom_AFP', cod)
   }
 
   // Campos canónicos que tienen columna directa en el layout.

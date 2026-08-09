@@ -1,8 +1,9 @@
 /**
- * Construcción del .xlsx de salida (tres hojas):
+ * Construcción del .xlsx de salida (cuatro hojas):
  *
  *   TXT CONSOLIDADO  las 108 columnas del layout Previred, una fila por trabajador
- *   Resumen          un renglón por PDF + los totales de control con ✔/✘
+ *   Resumen          un renglón por PDF con su estado + los totales de control con ✔/✘
+ *   Columnas         qué encabezado del PDF alimentó cada campo, y con qué clave
  *   Revisar          todo lo que quedó dudoso, para que nada se pierda en silencio
  *
  * ExcelJS trae campo "browser" en su package.json, así que Vite toma el build de
@@ -42,6 +43,7 @@ export async function construirLibro({ filas, documentos, control, avisos }) {
 
   hojaConsolidado(libro, filas)
   hojaResumen(libro, documentos, control)
+  hojaColumnas(libro, documentos)
   hojaRevisar(libro, avisos)
 
   const buffer = await libro.xlsx.writeBuffer()
@@ -84,10 +86,13 @@ function hojaResumen(libro, documentos, control) {
   encabezar(hoja, titulos, [34, 30, 22, 10, 34, 9, 13, 26])
 
   for (const d of documentos) {
-    let estado = 'Procesado'
+    // "Procesado" no dice nada: un PDF mal clasificado del que no se comprobó ni un
+    // total también estaba "procesado". Lo que importa es si quedó VERIFICADO.
+    let estado = d.estado === 'verificado' ? `Verificado (${d.cobertura?.comparados ?? 0} totales)` : 'SIN VERIFICAR'
     if (d.error) estado = `Error: ${d.error}`
     else if (d.duplicadoDe) estado = `Duplicado de ${d.duplicadoDe}`
     else if (!d.reconocido) estado = 'Institución no reconocida'
+    else if (d.estado === 'no cuadra') estado = 'NO CUADRA'
 
     const fila = hoja.addRow([
       d.archivo,
@@ -99,7 +104,8 @@ function hojaResumen(libro, documentos, control) {
       d.registros?.length ?? 0,
       estado,
     ])
-    if (estado !== 'Procesado') fila.getCell(8).font = { color: { argb: ROJO } }
+    if (!estado.startsWith('Verificado')) fila.getCell(8).font = { bold: true, color: { argb: ROJO } }
+    for (const motivo of d.motivos ?? []) hoja.addRow(['', '', '', '', '', '', '', motivo])
   }
 
   hoja.addRow([])
@@ -135,6 +141,43 @@ const NOTAS = [
   'Columnas sin dato: las que ninguna institución del ZIP alimenta quedan en 0 o vacías, no se inventan valores.',
   'Los montos provienen del comprobante de la institución, que puede diferir de lo declarado previamente por el empleador.',
 ]
+
+/**
+ * Una fila por columna detectada en cada PDF, con la clave que calzó y el campo al que
+ * fue a parar. Es el artefacto de auditoría que faltaba: permite ver de un vistazo que
+ * "Remuneración Imponible" se mapeó al campo equivocado, que es exactamente lo que no
+ * se veía desde ninguna parte.
+ */
+function hojaColumnas(libro, documentos) {
+  const hoja = libro.addWorksheet('Columnas')
+  encabezar(
+    hoja,
+    ['Archivo', 'Sección', 'Págs.', '#', 'Encabezado detectado', 'Clave que calzó', 'Nivel', 'Campo', 'Filas con valor', 'Suma'],
+    [26, 22, 10, 5, 52, 46, 10, 16, 14, 16],
+  )
+  for (const d of documentos) {
+    for (const c of d.columnas ?? []) {
+      const fila = hoja.addRow([
+        d.archivo,
+        c.seccion,
+        c.desde === c.hasta ? String(c.desde) : `${c.desde}-${c.hasta}`,
+        c.i,
+        c.etiqueta,
+        c.claveUsada ?? '(ninguna)',
+        c.nivel ?? '',
+        c.campo ?? '(SIN MAPEAR)',
+        c.filasConValor,
+        c.suma,
+      ])
+      fila.getCell(10).numFmt = '#,##0'
+      if (!c.campo) fila.getCell(8).font = { bold: true, color: { argb: ROJO } }
+      // Una columna con encabezado de agrupación que calzó por la clave genérica es la
+      // señal de que el perfil no distingue dos columnas que el PDF sí distingue.
+      else if (c.nivel === 'hoja' && c.etiqueta.includes(' > ')) fila.getCell(7).font = { color: { argb: ROJO } }
+    }
+  }
+  return hoja
+}
 
 function hojaRevisar(libro, avisos) {
   const hoja = libro.addWorksheet('Revisar')

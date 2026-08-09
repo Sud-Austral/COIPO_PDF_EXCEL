@@ -1,0 +1,142 @@
+{
+  "_comentario": "INVARIANTES CONGELADAS. Se escribieron ANTES de tocar src/lib/ y no las reescribe ningun flag: --actualizar solo toca fixtures/<zip>.json. Son la red que permite cambiar la deteccion, el mapeo y la geometria sin romper el CCAF de Caja Los Andes, que es el unico perfil validado contra datos reales y reproduce exacto los nueve totales de control que imprime su propia portada. Si una de estas cambia, o encontraste un bug real o rompiste algo: no la actualices sin entender cual de las dos cosas paso.",
+  "planvital.zip": {
+    "consolidado": {
+      "trabajadores": 3610,
+      "columnas": 108
+    },
+    "documentos": {
+      "CtrlPdf.pdf": {
+        "institucion": "Caja de Compensación Los Andes",
+        "bloque": "ccaf",
+        "paginas": 94,
+        "lineas": 4584,
+        "rutUnicos": 3610,
+        "paginasSinLeer": [],
+        "sumaPorCampo": {
+          "rut": {
+            "conValor": 4584
+          },
+          "nombre": {
+            "conValor": 4584
+          },
+          "dias": {
+            "conValor": 4069,
+            "suma": 105787
+          },
+          "codMov": {
+            "conValor": 4069
+          },
+          "fechaDesde": {
+            "conValor": 2661
+          },
+          "fechaHasta": {
+            "conValor": 2755
+          },
+          "tramo": {
+            "conValor": 4069
+          },
+          "cargasSim": {
+            "conValor": 4069,
+            "suma": 807
+          },
+          "cargasMat": {
+            "conValor": 4069,
+            "suma": 1
+          },
+          "cargasInv": {
+            "conValor": 4069,
+            "suma": 2
+          },
+          "asigFam": {
+            "conValor": 4069,
+            "suma": 1537948
+          },
+          "asigFamRetro": {
+            "conValor": 4069,
+            "suma": 496740
+          },
+          "reintCargas": {
+            "conValor": 4069,
+            "suma": 0
+          },
+          "impCcaf": {
+            "conValor": 4069,
+            "suma": 3784379016
+          },
+          "cotCcaf": {
+            "conValor": 4069,
+            "suma": 100331776
+          },
+          "credPersonal": {
+            "conValor": 515,
+            "suma": 57975516
+          },
+          "convDental": {
+            "conValor": 515,
+            "suma": 0
+          },
+          "leasing": {
+            "conValor": 515,
+            "suma": 7678010
+          },
+          "seguroVida": {
+            "conValor": 515,
+            "suma": 0
+          },
+          "otrosCcaf": {
+            "conValor": 515,
+            "suma": 0
+          }
+        },
+        "controlPorRotulo": {
+          "COTIZACIÓN NO AFILIADOS A ISAPRE": {
+            "declarado": 100331776,
+            "extraido": 100331776,
+            "ok": true
+          },
+          "ASIGNACIÓN FAMILIAR": {
+            "declarado": 1537948,
+            "extraido": 1537948,
+            "ok": true
+          },
+          "ASIGNACIÓN FAMILIAR RETROACTIVA": {
+            "declarado": 496740,
+            "extraido": 496740,
+            "ok": true
+          },
+          "REINTEGROS DE ASIGNACIÓN FAMILIAR": {
+            "declarado": 0,
+            "extraido": 0,
+            "ok": true
+          },
+          "CREDITOS PERSONALES": {
+            "declarado": 57975516,
+            "extraido": 57975516,
+            "ok": true
+          },
+          "CONVENIOS DENTALES": {
+            "declarado": 0,
+            "extraido": 0,
+            "ok": true
+          },
+          "LEASING": {
+            "declarado": 7678010,
+            "extraido": 7678010,
+            "ok": true
+          },
+          "SEGUROS DE VIDA": {
+            "declarado": 0,
+            "extraido": 0,
+            "ok": true
+          },
+          "N° de Afiliados Informados": {
+            "declarado": 3610,
+            "extraido": 3610,
+            "ok": true
+          }
+        }
+      }
+    }
+  }
+}

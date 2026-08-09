@@ -1,0 +1,655 @@
+{
+  "zip": "planvital.zip",
+  "sha256": "a008c2e6ede44407",
+  "documentos": [
+    {
+      "archivo": "CtrlPdf.pdf",
+      "paginas": 94,
+      "reconocido": true,
+      "institucion": "Caja de Compensación Los Andes",
+      "bloque": "ccaf",
+      "periodo": "07/2026",
+      "tieneFolio": true,
+      "duplicado": false,
+      "lineas": 4584,
+      "rutUnicos": 3610,
+      "afiliadosDeclarados": 3610,
+      "totalesControl": 8,
+      "paginasSinLeer": [],
+      "columnasSinMapear": [],
+      "columnas": [],
+      "control": [
+        {
+          "rotulo": "COTIZACIÓN NO AFILIADOS A ISAPRE",
+          "campo": "cotCcaf",
+          "declarado": 100331776,
+          "extraido": 100331776,
+          "ok": true
+        },
+        {
+          "rotulo": "ASIGNACIÓN FAMILIAR",
+          "campo": "asigFam",
+          "declarado": 1537948,
+          "extraido": 1537948,
+          "ok": true
+        },
+        {
+          "rotulo": "ASIGNACIÓN FAMILIAR RETROACTIVA",
+          "campo": "asigFamRetro",
+          "declarado": 496740,
+          "extraido": 496740,
+          "ok": true
+        },
+        {
+          "rotulo": "REINTEGROS DE ASIGNACIÓN FAMILIAR",
+          "campo": "reintCargas",
+          "declarado": 0,
+          "extraido": 0,
+          "ok": true
+        },
+        {
+          "rotulo": "CREDITOS PERSONALES",
+          "campo": "credPersonal",
+          "declarado": 57975516,
+          "extraido": 57975516,
+          "ok": true
+        },
+        {
+          "rotulo": "CONVENIOS DENTALES",
+          "campo": "convDental",
+          "declarado": 0,
+          "extraido": 0,
+          "ok": true
+        },
+        {
+          "rotulo": "LEASING",
+          "campo": "leasing",
+          "declarado": 7678010,
+          "extraido": 7678010,
+          "ok": true
+        },
+        {
+          "rotulo": "SEGUROS DE VIDA",
+          "campo": "seguroVida",
+          "declarado": 0,
+          "extraido": 0,
+          "ok": true
+        },
+        {
+          "rotulo": "N° de Afiliados Informados",
+          "campo": "(rut únicos)",
+          "declarado": 3610,
+          "extraido": 3610,
+          "ok": true
+        }
+      ]
+    },
+    {
+      "archivo": "planvital.pdf",
+      "paginas": 12,
+      "reconocido": true,
+      "institucion": "AFC",
+      "bloque": "afc",
+      "periodo": "07/2026",
+      "tieneFolio": true,
+      "duplicado": false,
+      "lineas": 470,
+      "rutUnicos": 409,
+      "afiliadosDeclarados": null,
+      "totalesControl": 0,
+      "paginasSinLeer": [],
+      "columnasSinMapear": [
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > Cotiz. %",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > Cotización Obligatoria",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > Cotización Voluntaria (APVI)",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > Deposito Convenido",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > N° Contrato APVI",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > Puesto de Trabajo",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Fondo de Pensiones > SIS",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Identificación del Trabajador > Apellido Paterno, Materno, Nombres",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Movimiento de Personal > Cotiz. Trab. Pesados",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Seguro Cesantía > Cotización Afiliado",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Seguro Cesantía > Cotización Empleador",
+        "8X3ZM0a1d6 - X22UW3MGm4 - 3LYWaTXPa4 - 8W1AC59T96 - m3M4h191m7 - h8Y3A3AXP6 - a8WTU8N1h1 - A0 > Seguro Cesantía > Dep. en Cta. Ahorro"
+      ],
+      "columnas": [],
+      "control": []
+    }
+  ],
+  "consolidado": {
+    "trabajadores": 3610,
+    "filas": 3610,
+    "columnas": 108,
+    "rutUnicos": 3610,
+    "columnasConstantes": [
+      "",
+      "sexo",
+      "nacion",
+      "tipo_pago",
+      "remu_desde",
+      "remu_hasta",
+      "reg_previ",
+      "tipo_trab",
+      "tipo_linea",
+      "reint_cargas",
+      "sub_trab_jov",
+      "nom_AFP",
+      "impo_afp",
+      "cot_obli_afp",
+      "aporte_sis",
+      "ahorro_afp",
+      "sust_afp",
+      "tasa_pac_afp",
+      "aporte_indem",
+      "num_per_sust",
+      "per_desde_sust",
+      "per_hasta_sust",
+      "trab_pesado",
+      "porc_trab_pesado",
+      "cot_trab_pesado",
+      "inst_apvi",
+      "num_contra_apvi",
+      "forma_pago_apvi",
+      "cotiza_apvi",
+      "cot_dep_conv",
+      "inst_apvc",
+      "num_contra_apvc",
+      "forma_pago_apvc",
+      "cotiza_apvc",
+      "cot_emp_apvc",
+      "rut_afi_volun",
+      "dv_afi_volun",
+      "ape_pat_volun",
+      "ape_mat_volun",
+      "nombre_volun",
+      "cod_mov_per_volun",
+      "fec_desde_volun",
+      "fec_hasta_volun",
+      "cod_afp_volun",
+      "monto_cap_volun",
+      "monto_aho_vol",
+      "num_per_cotiza",
+      "cod_ex_caja",
+      "tasa_ex_caja",
+      "renta_imp_fonasa",
+      "cot_INP",
+      "Renta_imp_des",
+      "cod_ex_caja_des",
+      "tasa_ex_caja_des",
+      "cot_desahucio",
+      "cotiza_fonasa",
+      "cot_acc_trab_inp",
+      "boni_ley",
+      "desc_cargas_fam_inp",
+      "seguro_compl_salud",
+      "cod_inst_salud",
+      "num_FUN_poliza",
+      "impo_isapre",
+      "moneda_plan",
+      "cot_pactada",
+      "cot_obli_isa",
+      "cot_ad_vol",
+      "tipo_poliza",
+      "cod_CCAF",
+      "Desc_Dental",
+      "desc_seg_vida",
+      "otros_desc_ccaf",
+      "Desc_Car_fam",
+      "renta_imp_mes_ant",
+      "tipo_jornada",
+      "expectativa_vida",
+      "rentabilidad_protegida",
+      "cod_mutual",
+      "impo_mutual",
+      "cotiza_mutual",
+      "sucur_mutual",
+      "Aporte_trab_SC",
+      "aporte_emp_SC",
+      "rut_pag_subs",
+      "dv_pag_subs",
+      "centro_costo"
+    ],
+    "sumaPorColumna": {
+      "0:rut": {
+        "distintos": 3610,
+        "suma": 51590911027
+      },
+      "1:": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "2:Linea": {
+        "distintos": 3610,
+        "suma": 6517855
+      },
+      "3:rut": {
+        "distintos": 3610,
+        "suma": 51590911027
+      },
+      "4:dv": {
+        "distintos": 11,
+        "suma": 14538
+      },
+      "5:ape_pat": {
+        "distintos": 1067,
+        "suma": 0
+      },
+      "6:ape_mat": {
+        "distintos": 1053,
+        "suma": 0
+      },
+      "7:nombres": {
+        "distintos": 2918,
+        "suma": 0
+      },
+      "8:sexo": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "9:nacion": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "10:tipo_pago": {
+        "distintos": 1,
+        "suma": 3610
+      },
+      "11:remu_desde": {
+        "distintos": 1,
+        "suma": 260013860
+      },
+      "12:remu_hasta": {
+        "distintos": 1,
+        "suma": 260013860
+      },
+      "13:reg_previ": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "14:tipo_trab": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "15:dias_trab": {
+        "distintos": 30,
+        "suma": 102429
+      },
+      "16:tipo_linea": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "17:cod_mov": {
+        "distintos": 5,
+        "suma": 9191
+      },
+      "18:Fecha_Desde": {
+        "distintos": 20,
+        "suma": 0
+      },
+      "19:Fecha_Hasta": {
+        "distintos": 29,
+        "suma": 0
+      },
+      "20:Tramo_Fam": {
+        "distintos": 4,
+        "suma": 0
+      },
+      "21:num_car_sim": {
+        "distintos": 6,
+        "suma": 807
+      },
+      "22:num_car_mat": {
+        "distintos": 2,
+        "suma": 1
+      },
+      "23:num_car_inv": {
+        "distintos": 2,
+        "suma": 2
+      },
+      "24:asig_fam": {
+        "distintos": 16,
+        "suma": 1537948
+      },
+      "25:asig_fam_ret": {
+        "distintos": 17,
+        "suma": 496740
+      },
+      "26:reint_cargas": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "27:sub_trab_jov": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "28:nom_AFP": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "29:impo_afp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "30:cot_obli_afp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "31:aporte_sis": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "32:ahorro_afp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "33:sust_afp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "34:tasa_pac_afp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "35:aporte_indem": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "36:num_per_sust": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "37:per_desde_sust": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "38:per_hasta_sust": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "39:trab_pesado": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "40:porc_trab_pesado": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "41:cot_trab_pesado": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "42:inst_apvi": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "43:num_contra_apvi": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "44:forma_pago_apvi": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "45:cotiza_apvi": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "46:cot_dep_conv": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "47:inst_apvc": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "48:num_contra_apvc": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "49:forma_pago_apvc": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "50:cotiza_apvc": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "51:cot_emp_apvc": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "52:rut_afi_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "53:dv_afi_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "54:ape_pat_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "55:ape_mat_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "56:nombre_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "57:cod_mov_per_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "58:fec_desde_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "59:fec_hasta_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "60:cod_afp_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "61:monto_cap_volun": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "62:monto_aho_vol": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "63:num_per_cotiza": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "64:cod_ex_caja": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "65:tasa_ex_caja": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "66:renta_imp_fonasa": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "67:cot_INP": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "68:Renta_imp_des": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "69:cod_ex_caja_des": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "70:tasa_ex_caja_des": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "71:cot_desahucio": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "72:cotiza_fonasa": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "73:cot_acc_trab_inp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "74:boni_ley": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "75:desc_cargas_fam_inp": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "76:seguro_compl_salud": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "77:cod_inst_salud": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "78:num_FUN_poliza": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "79:impo_isapre": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "80:moneda_plan": {
+        "distintos": 1,
+        "suma": 3610
+      },
+      "81:cot_pactada": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "82:cot_obli_isa": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "83:cot_ad_vol": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "84:tipo_poliza": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "85:cod_CCAF": {
+        "distintos": 1,
+        "suma": 3610
+      },
+      "86:impo_ccaf": {
+        "distintos": 662,
+        "suma": 3784379016
+      },
+      "87:Cred_per_CCAF": {
+        "distintos": 368,
+        "suma": 57975516
+      },
+      "88:Desc_Dental": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "89:desc_leassing": {
+        "distintos": 72,
+        "suma": 7678010
+      },
+      "90:desc_seg_vida": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "91:otros_desc_ccaf": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "92:cot_CCAF": {
+        "distintos": 568,
+        "suma": 100331776
+      },
+      "93:Desc_Car_fam": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "94:renta_imp_mes_ant": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "95:tipo_jornada": {
+        "distintos": 1,
+        "suma": 3610
+      },
+      "96:expectativa_vida": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "97:rentabilidad_protegida": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "98:cod_mutual": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "99:impo_mutual": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "100:cotiza_mutual": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "101:sucur_mutual": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "102:Renta_impo_SC": {
+        "distintos": 180,
+        "suma": 797942145
+      },
+      "103:Aporte_trab_SC": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "104:aporte_emp_SC": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "105:rut_pag_subs": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "106:dv_pag_subs": {
+        "distintos": 1,
+        "suma": 0
+      },
+      "107:centro_costo": {
+        "distintos": 1,
+        "suma": 0
+      }
+    }
+  },
+  "avisosPorTipo": {
+    "Columna sin mapear": 12,
+    "Nombre incompleto": 41
+  },
+  "control": {
+    "total": 9,
+    "ok": 9
+  }
+}

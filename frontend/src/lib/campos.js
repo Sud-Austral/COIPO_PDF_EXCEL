@@ -42,7 +42,7 @@ export const CAMPOS = {
   otrosCcaf: { agg: 'suma', col: 'otros_desc_ccaf' },
   descCargasCcaf: { agg: 'suma', col: 'Desc_Car_fam' },
 
-  // --- AFP (sin validar: falta una muestra real) ---
+  // --- AFP — validado contra AFP PlanVital 07/2026 ---
   impAfp: { agg: 'suma', col: 'impo_afp' },
   cotObliAfp: { agg: 'suma', col: 'cot_obli_afp' },
   aporteSis: { agg: 'suma', col: 'aporte_sis' },
@@ -52,6 +52,13 @@ export const CAMPOS = {
   cotizaApvi: { agg: 'suma', col: 'cotiza_apvi' },
   cotizaApvc: { agg: 'suma', col: 'cotiza_apvc' },
   cotEmpApvc: { agg: 'suma', col: 'cot_emp_apvc' },
+  cotDepConv: { agg: 'suma', col: 'cot_dep_conv' },
+  numContraApvi: { agg: 'primero', col: 'num_contra_apvi' },
+  trabPesado: { agg: 'primero', col: 'trab_pesado' },
+  porcTrabPesado: { agg: 'max', col: 'porc_trab_pesado' },
+  // La base imponible de trabajos pesados no tiene columna en el layout Previred:
+  // se extrae para poder verificarla contra la portada, y no viaja al Excel.
+  impTrabPesado: { agg: 'suma', col: null },
 
   // --- Fonasa / IPS (sin validar) ---
   impFonasa: { agg: 'suma', col: 'renta_imp_fonasa' },

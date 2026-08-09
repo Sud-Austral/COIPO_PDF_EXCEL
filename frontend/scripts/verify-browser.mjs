@@ -23,7 +23,13 @@ import { BASE, buscarChrome, servirDist } from './servidor.mjs'
 const AQUI = path.dirname(fileURLToPath(import.meta.url))
 const RAIZ = path.resolve(AQUI, '..')
 const DIST = path.join(RAIZ, 'dist')
-const ZIP = path.resolve(RAIZ, '../INSUMO/pdfProvired.zip')
+// El primer .zip de INSUMO/, no un nombre fijo: apuntaba a pdfProvired.zip, que dejó
+// de existir, y el script salía con 0 sin llegar a abrir el navegador.
+const INSUMO = path.resolve(RAIZ, '../INSUMO')
+const ZIP = fs.existsSync(INSUMO)
+  ? (fs.readdirSync(INSUMO).filter((f) => f.toLowerCase().endsWith('.zip')).sort()[0] ?? '')
+  : ''
+const RUTA_ZIP = ZIP ? path.join(INSUMO, ZIP) : ''
 const DESCARGAS = path.join(RAIZ, '.verify-browser')
 
 const salir = (motivo) => {
@@ -32,7 +38,7 @@ const salir = (motivo) => {
 }
 
 if (!fs.existsSync(DIST)) salir('No existe dist/. Corre primero: npm run build')
-if (!fs.existsSync(ZIP)) salir(`No existe ${ZIP}. INSUMO/ está en .gitignore.`)
+if (!RUTA_ZIP) salir(`No hay ningún .zip en ${INSUMO}. INSUMO/ está en .gitignore.`)
 const chrome = buscarChrome()
 if (!chrome) salir('No se encontró Chrome ni Edge instalados.')
 
@@ -82,10 +88,10 @@ try {
     eventsEnabled: true,
   })
 
-  console.log('\n2. PROCESAMIENTO DEL ZIP')
+  console.log(`\n2. PROCESAMIENTO DE ${ZIP}`)
   const t0 = Date.now()
   const input = await pagina.$('input[type=file]')
-  await input.uploadFile(ZIP)
+  await input.uploadFile(RUTA_ZIP)
 
   await pagina.waitForSelector('.progreso', { timeout: 15_000 })
   ok(true, 'apareció la barra de progreso')

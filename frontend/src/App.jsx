@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import Banner from './components/Banner.jsx'
@@ -9,6 +9,16 @@ import Control from './components/Control.jsx'
 import Avisos from './components/Avisos.jsx'
 
 const INICIAL = { fase: 'inicio', progreso: null, resultado: null, error: null, nombreZip: '' }
+
+/** Cuántos documentos quedaron verificados, y con cuántas comparaciones. */
+function resumenVerificacion({ documentos, control }) {
+  const utiles = (documentos ?? []).filter((d) => !d.duplicadoDe)
+  const ok = utiles.filter((d) => d.estado === 'verificado').length
+  if (ok === utiles.length) {
+    return `${utiles.length} documento(s) verificado(s) contra ${control.length} totales de su propia portada`
+  }
+  return `${ok} de ${utiles.length} documento(s) verificado(s) — revisa el detalle`
+}
 
 export default function App() {
   const [estado, setEstado] = useState(INICIAL)
@@ -76,10 +86,10 @@ export default function App() {
     setEstado(INICIAL)
   }, [])
 
-  const problemas = useMemo(
-    () => (estado.resultado?.control ?? []).filter((c) => !c.ok).length,
-    [estado.resultado],
-  )
+  // OJO: el estado NO puede volver a ser "cuántos controles fallan". Un documento sin
+  // ningún control da cero fallos, y así fue como la pantalla dijo "todos los totales
+  // cuadran" mientras un comprobante entero estaba mal clasificado.
+  const verificado = estado.resultado?.estado === 'verificado'
 
   return (
     <>
@@ -119,7 +129,11 @@ export default function App() {
                 <span>trabajadores consolidados</span>
               </div>
               <div className="acciones">
-                <a className="boton primario" href={estado.resultado.url} download={estado.resultado.archivo}>
+                <a
+                  className={`boton ${verificado ? 'primario' : ''}`}
+                  href={estado.resultado.url}
+                  download={estado.resultado.archivo}
+                >
                   Descargar Excel
                 </a>
                 <button type="button" className="boton" onClick={reiniciar}>
@@ -127,23 +141,46 @@ export default function App() {
                 </button>
               </div>
               <p className="nota">
-                {estado.resultado.archivo} · {(estado.resultado.tamano / 1024 / 1024).toFixed(1)} MB ·
-                {problemas === 0
-                  ? ' todos los totales del comprobante cuadran'
-                  : ` ${problemas} total(es) no cuadran, revisa la hoja Resumen`}
+                {estado.resultado.archivo} · {(estado.resultado.tamano / 1024 / 1024).toFixed(1)} MB ·{' '}
+                {resumenVerificacion(estado.resultado)}
               </p>
             </section>
 
+            {!verificado && (
+              <section className="tarjeta error">
+                <h2>Esta planilla NO está verificada</h2>
+                <ul className="motivos">
+                  {estado.resultado.documentos
+                    .filter((d) => d.estado && d.estado !== 'verificado')
+                    .map((d) => (
+                      <li key={d.archivo}>
+                        <strong>{d.archivo}</strong> — {d.institucion} — {d.estado.toUpperCase()}
+                        <ul>
+                          {d.motivos.map((m, i) => (
+                            <li key={i}>{m}</li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                </ul>
+                <p className="nota">
+                  El archivo se generó igual y se puede descargar, pero conviene revisar la hoja{' '}
+                  <strong>Revisar</strong> antes de usarlo.
+                </p>
+              </section>
+            )}
+
             <TablaDocumentos documentos={estado.resultado.documentos} />
-            <Control control={estado.resultado.control} />
+            <Control control={estado.resultado.control} documentos={estado.resultado.documentos} />
             <Avisos avisos={estado.resultado.avisos} />
           </>
         )}
 
         <footer>
           <p>
-            El Excel trae tres hojas: <strong>TXT CONSOLIDADO</strong> con las 108 columnas,{' '}
-            <strong>Resumen</strong> con los totales de control de cada comprobante y{' '}
+            El Excel trae cuatro hojas: <strong>TXT CONSOLIDADO</strong> con las 108 columnas,{' '}
+            <strong>Resumen</strong> con el estado de cada comprobante y sus totales de control,{' '}
+            <strong>Columnas</strong> con qué encabezado del PDF alimentó cada campo, y{' '}
             <strong>Revisar</strong> con todo lo que quedó dudoso.
           </p>
         </footer>

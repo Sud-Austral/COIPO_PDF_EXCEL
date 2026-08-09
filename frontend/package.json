@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "oxlint",
+    "test": "node --test \"test/**/*.test.mjs\"",
     "verify": "node scripts/verify.mjs",
     "verify:browser": "node scripts/verify-browser.mjs",
     "verify:banner": "node scripts/verify-banner.mjs",
