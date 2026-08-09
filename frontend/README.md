@@ -15,6 +15,7 @@ npm run verify           # arnés de datos, en Node, sobre todos los INSUMO/*.zi
 npm run verify:browser   # arnés en Chrome real sobre dist/ (correr build antes)
 npm run verify:banner    # arnés del banner: mide píxeles sobre las capturas
 npm run favicon          # regenera el favicon recortando el isotipo del banner
+npm run informe          # docs/comprobantes-previred.pdf para el área de personal
 ```
 
 ## Cómo está armado

@@ -98,6 +98,20 @@ datos, así que corren siempre.
 
 Ver [`frontend/README.md`](frontend/README.md) para el detalle de la arquitectura.
 
+## Informe para el área de personal
+
+`npm run informe` genera [`docs/comprobantes-previred.pdf`](docs/comprobantes-previred.pdf): qué
+trae cada comprobante del ZIP, cuántos trabajadores cubre cada institución y cuáles se solapan,
+qué columnas de la planilla quedan sin dato y quién tendría que aportarlas, y la comparación entre
+los dos insumos posibles —el archivo plano de Previred (lo declarado) y los comprobantes en PDF
+(lo cobrado)—.
+
+**Los números no se escriben a mano**: salen de ejecutar el mismo pipeline que usa la app sobre el
+ZIP real, así que el documento no puede quedar desfasado en silencio. Y como está pensado para
+enviarse por correo, el generador **relee el PDF antes de darlo por bueno** y aborta si encuentra
+algo que parezca un RUT o un apellido de la muestra: sólo salen conteos, nombres de columna y los
+totales que el propio comprobante imprime en su portada.
+
 ## Identidad
 
 La cabecera es el banner institucional CONAF · UIA, y el favicon es el isotipo recortado de ese
