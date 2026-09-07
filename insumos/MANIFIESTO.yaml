@@ -1,0 +1,174 @@
+archivos:
+
+  - ruta: frontend/package.json
+    sha256: "13c91d4e7ffaed0ce1c78481f45cef5454cc18f5423209c4235bef60a46805e2"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: unico manifiesto del proyecto; declara dependencias y comandos de construccion, prueba y verificacion
+
+  - ruta: frontend/package-lock.json
+    sha256: "7252f009e5a176dcd6ce2abb9f02f60cc049623c57e1b589d6c3d7eff27c2c1a"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: fija las versiones exactas resueltas
+
+  - ruta: frontend/vite.config.js
+    sha256: "d53c3b156100e57afc5ee52a25c5c73a57769835f44d83d5b668325a55dff89c"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: configuracion de construccion y ruta base del sitio [frontend/vite.config.js:8]
+
+  - ruta: frontend/.oxlintrc.json
+    sha256: "9a11085b48d1ea2c1cdd18c3438a669abcc635f5586019e5df87161369af70ef"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: configuracion de la revision estatica
+
+  - ruta: .github/workflows/deploy.yml
+    sha256: "7a76a6e8ee65e8f7f4e6789b094c325e4f0efe62344e83ac97a3f69923e6806f"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: publica el sitio estatico
+
+  - ruta: .gitignore
+    sha256: "e83c79e4bcb54b739dbe5673878973ad1c139af21b65729109ca3701af3d5c06"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: lista de exclusiones del control de versiones; no se edita desde este ejercicio
+
+  - ruta: frontend/.gitignore
+    sha256: "a2f0deb984b057849697b4f9cfea1a14ab096f6726fe3928b06075d641f0fe3a"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: exclusiones especificas de la carpeta de la interfaz
+
+  - ruta: INSUMO/planvital.zip
+    sha256: "a008c2e6ede444077aa1f288fa712622aff1541995852a4a429ef76ad4940e7d"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] archivo comprimido de comprobantes de una institucion previsional, del tipo que el sistema procesa [frontend/src/lib/unzip.js]; NO vive en tests/ ni en fixtures/; patron esperable de identificador tributario y de datos de remuneracion segun [frontend/src/lib/previredLayout.js]; conteo [PENDIENTE] porque el analizador no extrajo el contenido"
+    puede_versionarse: false
+    uso: insumo de entrada usado para desarrollar y comprobar la lectura de documentos
+
+  - ruta: INSUMO/planvital/planvital.pdf
+    sha256: "fd2cf88e799b8254f867fd8caf7d47f037488083b58456a753defa21ec1a9b08"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] comprobante de una institucion previsional; NO vive en tests/ ni en fixtures/; patron esperable de identificador tributario y de datos de remuneracion; conteo [PENDIENTE]"
+    puede_versionarse: false
+    uso: comprobante de referencia del que se dedujeron las reglas de lectura [frontend/src/lib/perfiles.js]
+
+  - ruta: INSUMO/planvital/CtrlPdf.pdf
+    sha256: "333a960e160f2b118eedebf9616175e0aec1d23041985806c6f3feef128e15e9"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] documento de control acompanante del comprobante; NO vive en tests/ ni en fixtures/; conteo [PENDIENTE]"
+    puede_versionarse: false
+    uso: documento de control del mismo conjunto de comprobantes
+
+  - ruta: frontend/consolidado-previred-072026.xlsx
+    sha256: "47ad73139164f83653abd69143b6d1e2404d5797ed870475a4bb85dbd6e8e208"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] planilla consolidada de un periodo fechado, producida por [frontend/src/lib/buildWorkbook.js]; NO vive en tests/ ni en fixtures/; su estructura reserva columnas de identificador tributario [frontend/src/lib/previredLayout.js]; conteo [PENDIENTE]"
+    puede_versionarse: false
+    uso: salida del sistema conservada en el repositorio
+
+  - ruta: frontend/.verify-browser/consolidado-previred-072026.xlsx
+    sha256: "eb745da77ebffd167c6fb53bdf8182d8a33e345829112a0c4ac77937bcfdb40e"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] segunda copia de la planilla consolidada, producida por la comprobacion en navegador [frontend/scripts/verify-browser.mjs]; conteo [PENDIENTE]"
+    puede_versionarse: false
+    uso: salida generada durante la verificacion automatica
+
+  - ruta: frontend/fixtures/congelado.json
+    sha256: "f15cfe82834ca1f6b773518d6f724dc49fc15000b82126fd5c6af2bbd9d7b3bd"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] vive en fixtures/, lo que aumenta la probabilidad de que sea de prueba, pero no lo prueba; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: referencia fija contra la que se comparan las corridas [frontend/scripts/verify.mjs]
+
+  - ruta: frontend/fixtures/planvital.zip.json
+    sha256: "6df97e437f48f311612229bf309ea6dbd2cafb7b51abcd22ff81615a696b42fc"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] derivado del archivo comprimido de comprobantes [INSUMO/planvital.zip]; vive en fixtures/, lo que aumenta la probabilidad de que sea de prueba, pero su origen es un documento real; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: resultado congelado de procesar el conjunto de comprobantes de referencia
+
+  - ruta: frontend/fixtures/planvital.zip.json.nuevo
+    sha256: "c9624ca02ca59652f962bcd43674f725707afc87f1604d4e5f2390560e7891aa"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] version posterior del anterior; mismas consideraciones; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: version posterior del resultado congelado, sin consolidar
+
+  - ruta: docs/comprobantes-previred.pdf
+    sha256: "26c6e4fc266009582546755367ccb4a68cea4bd1c4176aba10aeb3d1a7889676"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] documentacion sobre los comprobantes; si incluye ejemplos con datos reales no consta; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: referencia sobre la forma de los comprobantes
+
+  - ruta: docs/comprobantes-previred.html
+    sha256: "f0b5af5bbecf33afb6800ac97cc9333bd0b8d8ca898bb27aa8a0c0524f410012"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] misma referencia en formato web; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: referencia sobre la forma de los comprobantes
+
+  - ruta: frontend/src/lib/previredLayout.js
+    sha256: "b7da0a4be3fce68a5b70d0ba69f3abe3f754025538f306bbde7eb8cdfa590134"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] define columnas, no valores; conteo de valores 0 segun la evidencia disponible"
+    puede_versionarse: true
+    uso: fija la disposicion de columnas de la planilla de salida
+
+  - ruta: frontend/src/lib/campos.js
+    sha256: "92dbf1d1d12add2440dd9b54f45530400af4c85f063669a742b607a58cf6362f"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] catalogo de campos, no valores; conteo de valores 0 segun la evidencia disponible"
+    puede_versionarse: true
+    uso: catalogo de campos al que se mapean las columnas leidas
+
+  - ruta: frontend/src/lib/perfiles.js
+    sha256: "c3936ab111dae3346fd02379cbe5b09c50548419df15159d235d26714c11dfd4"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] reglas de deteccion por institucion, no valores; conteo de valores 0 segun la evidencia disponible"
+    puede_versionarse: true
+    uso: decide a que institucion corresponde cada comprobante
+
+  - ruta: INSUMO_GRAFICO/implementacion_banner.md
+    sha256: "8818135c7e45f82e2bb60355f55a7595abd90188314bf2fc6e40048e630e8f76"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] sin patron de dato personal detectado en la evidencia; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: describe como se implanto el elemento grafico institucional
+
+  - ruta: INSUMO_GRAFICO/verificacion/captura-banner-1366-light.png
+    sha256: "2e7b710962df55ac0b1309b24abab44fe8c98e5993df3e7e7f4f1f204f7bc755"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] captura de pantalla; si muestra datos de una corrida real no consta; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: evidencia de la verificacion grafica [frontend/scripts/verify-banner.mjs]
+
+  - ruta: frontend/captura-light.png
+    sha256: "00f9aa59b290e1ea1ab2faf496c08552819a3a51f70047065bedc4fa2011fc23"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] captura de la aplicacion en uso; podria mostrar el listado de documentos procesados [frontend/src/components/TablaDocumentos.jsx]; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: captura de la pantalla en tema claro
+
+  - ruta: frontend/captura-dark.png
+    sha256: "e7de4ae1a6d1be5477d3f9610b153c22d0d141cb5b3c82988e27ece3ae163e62"
+    origen: "[PENDIENTE] quien lo entrego y cuando"
+    contiene_pii: "[VERIFICAR] captura de la aplicacion en uso; mismas consideraciones que la anterior; conteo [PENDIENTE]"
+    puede_versionarse: true
+    uso: captura de la pantalla en tema oscuro
+
+hallazgos:
+  - "La evidencia del repositorio lo marca como no privado, y contiene comprobantes previsionales [INSUMO/planvital/planvital.pdf] y dos planillas consolidadas fechadas [frontend/consolidado-previred-072026.xlsx], [frontend/.verify-browser/consolidado-previred-072026.xlsx]. Ninguno de esos archivos vive en tests/ ni en fixtures/. Es el hallazgo mas urgente de este manifiesto. [VERIFICAR]"
+  - "Para los cinco archivos anteriores se propone puede_versionarse false. Si esa condicion se confirma, sus rutas deben quedar excluidas del control de versiones y ancladas con barra inicial. No se edita .gitignore desde este ejercicio."
+  - "El analizador no extrajo el contenido de los archivos, de modo que ningun conteo de patrones de dato personal pudo calcularse. Todos los conteos quedan [PENDIENTE]."
