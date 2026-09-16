@@ -1,1 +1,6 @@
 INSUMO/
+
+# --- Higiene basica: dependencias, artefactos de build y secretos ---
+.env
+.env.local
+.env.*.local
