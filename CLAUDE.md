@@ -19,7 +19,8 @@ Se publica en GitHub Pages.
 ## Comandos (desde `frontend/`, existen en `package.json`)
 `npm ci`, `npm run dev`, `npm run build`, `npm run lint` (oxlint), `npm run test`, `npm run verify`,
 `npm run verify:browser` (requiere build y Chrome), `npm run verify:banner`, `npm run favicon`, `npm run informe`.
-No ejecuté estos comandos al escribir este documento.
+Verificado el 2026-11-24 (Node, tras `npm ci`): `npm run test` → 25 pass, 0 fail; `npm run lint` (oxlint) → salida 0 sin avisos;
+`npm run build` → ok. No comprobados ese día: `verify` (requiere `INSUMO/`, que no está en el clon), `verify:browser`, `verify:banner`, `informe`.
 
 ## Convenciones
 - Español en interfaz, comentarios y mensajes. JS con módulos ES, sin TypeScript.
